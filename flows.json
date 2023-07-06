@@ -1,6 +1,6 @@
 [
     {
-        "id": "4197ca8541051dcf",
+        "id": "ab2a3f789b90c1d1",
         "type": "tab",
         "label": "MQTT",
         "disabled": false,
@@ -8,29 +8,30 @@
         "env": []
     },
     {
-        "id": "e18bb26e.b87e68",
+        "id": "e5eca0bd39f04113",
         "type": "mqtt in",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "Subscrição",
         "topic": "topico/temperatura",
         "qos": "2",
         "datatype": "utf8",
         "broker": "c1db5e2d.c585c8",
         "inputs": 0,
-        "x": 80,
-        "y": 140,
+        "x": 100,
+        "y": 80,
         "wires": [
             [
-                "c306bdc147a5cbe6"
+                "5c6993c38270f393",
+                "e1d4c88ffad850ac"
             ]
         ]
     },
     {
-        "id": "6a2f3ea6.e04a14",
+        "id": "901a612961c5304b",
         "type": "function",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "Processar mensagem",
-        "func": "if (msg.payload >= \"15\") {\n    // Enviar para o Telegram\n    msg.payload = \"Mensagem de alerta: Temperatura alta \" + msg.payload;\n    return msg;\n}\n",
+        "func": "if (msg.payload >= \"24\") {\n    msg.payload = \"Alerta!!! Temperatura alta \" + msg.payload + \"°C\";\n    return msg;\n}\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -40,18 +41,16 @@
         "y": 280,
         "wires": [
             [
-                "26fbdf6f.7af39e",
-                "6b3c2f73a840089b",
-                "7ac9602db4b738f3",
-                "f2ec2c6c5d3d7894",
-                "ab7c82369bf639c9"
+                "3b2dc3eab2ef80c0",
+                "213b0f38d11cc90b",
+                "8705210507b6a0cc"
             ]
         ]
     },
     {
-        "id": "26fbdf6f.7af39e",
+        "id": "e77de56a3c9b0542",
         "type": "mqtt out",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "Publicação",
         "topic": "",
         "qos": "",
@@ -62,16 +61,16 @@
         "correl": "",
         "expiry": "",
         "broker": "c1db5e2d.c585c8",
-        "x": 870,
-        "y": 60,
+        "x": 670,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "c306bdc147a5cbe6",
+        "id": "f8eeebf9dad5261f",
         "type": "random",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "",
-        "low": 1,
+        "low": "20",
         "high": "30",
         "inte": "true",
         "property": "payload",
@@ -79,17 +78,17 @@
         "y": 280,
         "wires": [
             [
-                "6a2f3ea6.e04a14",
-                "bc352b9d32f433b9",
-                "ddd8745f4d5f061b",
-                "b5b51ed14c5f1b48"
+                "901a612961c5304b",
+                "b59ae3d71edfac9f",
+                "9d8129ed45318943",
+                "a616f19cf8d2f8bf"
             ]
         ]
     },
     {
-        "id": "b0843c48c31e9a73",
+        "id": "994d9d5d71f57cdb",
         "type": "inject",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "Temperaturas",
         "props": [
             {
@@ -100,25 +99,25 @@
                 "vt": "str"
             }
         ],
-        "repeat": "3600",
+        "repeat": "60",
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
         "topic": "topico/temperatura",
         "payload": "",
         "payloadType": "date",
-        "x": 120,
-        "y": 360,
+        "x": 140,
+        "y": 280,
         "wires": [
             [
-                "c306bdc147a5cbe6"
+                "f8eeebf9dad5261f"
             ]
         ]
     },
     {
-        "id": "bc352b9d32f433b9",
+        "id": "b59ae3d71edfac9f",
         "type": "ui_gauge",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "",
         "group": "048f2c1b55e013f7",
         "order": 0,
@@ -144,9 +143,9 @@
         "wires": []
     },
     {
-        "id": "ddd8745f4d5f061b",
+        "id": "9d8129ed45318943",
         "type": "ui_chart",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "",
         "group": "048f2c1b55e013f7",
         "order": 1,
@@ -161,7 +160,7 @@
         "dot": true,
         "ymin": "0",
         "ymax": "30",
-        "removeOlder": 1,
+        "removeOlder": "3",
         "removeOlderPoints": "",
         "removeOlderUnit": "3600",
         "cutout": 0,
@@ -182,15 +181,15 @@
         "useDifferentColor": false,
         "className": "",
         "x": 590,
-        "y": 460,
+        "y": 420,
         "wires": [
             []
         ]
     },
     {
-        "id": "6b3c2f73a840089b",
+        "id": "3b2dc3eab2ef80c0",
         "type": "ui_toast",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "position": "top right",
         "displayTime": "3",
         "highlight": "",
@@ -207,9 +206,9 @@
         "wires": []
     },
     {
-        "id": "7ac9602db4b738f3",
+        "id": "213b0f38d11cc90b",
         "type": "e-mail",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "server": "smtp.gmail.com",
         "port": "465",
         "authtype": "BASIC",
@@ -220,56 +219,116 @@
         "name": "anabsfonseca@gmail.com",
         "dname": "e-mail",
         "x": 870,
-        "y": 260,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "f2ec2c6c5d3d7894",
+        "id": "5c6993c38270f393",
         "type": "file",
-        "z": "4197ca8541051dcf",
+        "z": "ab2a3f789b90c1d1",
         "name": "data",
-        "filename": "/nodered/data.txt",
+        "filename": "data.txt",
         "filenameType": "str",
         "appendNewline": true,
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 870,
-        "y": 160,
+        "x": 330,
+        "y": 140,
         "wires": [
             []
         ]
     },
     {
-        "id": "b5b51ed14c5f1b48",
+        "id": "d55b8a80378bab29",
         "type": "debug",
-        "z": "4197ca8541051dcf",
-        "name": "debug 1",
+        "z": "ab2a3f789b90c1d1",
+        "name": "data (dados crus)",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 560,
-        "y": 120,
+        "x": 730,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "ab7c82369bf639c9",
+        "id": "8705210507b6a0cc",
         "type": "debug",
-        "z": "4197ca8541051dcf",
-        "name": "debug 2",
+        "z": "ab2a3f789b90c1d1",
+        "name": "dado processado",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
+        "x": 890,
         "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e1d4c88ffad850ac",
+        "type": "function",
+        "z": "ab2a3f789b90c1d1",
+        "name": "Processar mensagem",
+        "func": "if (msg.payload >= \"15\") {\n    // Enviar para o Telegram\n    msg.payload = \"Mensagem de alerta: Temperatura alta \" + msg.payload;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "e77de56a3c9b0542"
+            ]
+        ]
+    },
+    {
+        "id": "a616f19cf8d2f8bf",
+        "type": "file",
+        "z": "ab2a3f789b90c1d1",
+        "name": "data",
+        "filename": "data.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 510,
+        "y": 180,
+        "wires": [
+            [
+                "d55b8a80378bab29"
+            ]
+        ]
+    },
+    {
+        "id": "bea0bdb96e3f5ca8",
+        "type": "comment",
+        "z": "ab2a3f789b90c1d1",
+        "name": "MQTT",
+        "info": "",
+        "x": 190,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "19c5ca45a6414abd",
+        "type": "comment",
+        "z": "ab2a3f789b90c1d1",
+        "name": "simulado ",
+        "info": "",
+        "x": 220,
+        "y": 240,
         "wires": []
     },
     {
@@ -301,7 +360,7 @@
     {
         "id": "048f2c1b55e013f7",
         "type": "ui_group",
-        "name": "Refrigerador",
+        "name": "Quarto",
         "tab": "93701c83a2316e5d",
         "order": 1,
         "disp": true,
@@ -312,7 +371,7 @@
     {
         "id": "93701c83a2316e5d",
         "type": "ui_tab",
-        "name": "Home",
+        "name": "Casa",
         "icon": "dashboard",
         "disabled": false,
         "hidden": false

@@ -1,0 +1,320 @@
+[
+    {
+        "id": "4197ca8541051dcf",
+        "type": "tab",
+        "label": "MQTT",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e18bb26e.b87e68",
+        "type": "mqtt in",
+        "z": "4197ca8541051dcf",
+        "name": "Subscrição",
+        "topic": "topico/temperatura",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "c1db5e2d.c585c8",
+        "inputs": 0,
+        "x": 80,
+        "y": 140,
+        "wires": [
+            [
+                "c306bdc147a5cbe6"
+            ]
+        ]
+    },
+    {
+        "id": "6a2f3ea6.e04a14",
+        "type": "function",
+        "z": "4197ca8541051dcf",
+        "name": "Processar mensagem",
+        "func": "if (msg.payload >= \"15\") {\n    // Enviar para o Telegram\n    msg.payload = \"Mensagem de alerta: Temperatura alta \" + msg.payload;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "26fbdf6f.7af39e",
+                "6b3c2f73a840089b",
+                "7ac9602db4b738f3",
+                "f2ec2c6c5d3d7894",
+                "ab7c82369bf639c9"
+            ]
+        ]
+    },
+    {
+        "id": "26fbdf6f.7af39e",
+        "type": "mqtt out",
+        "z": "4197ca8541051dcf",
+        "name": "Publicação",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c1db5e2d.c585c8",
+        "x": 870,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c306bdc147a5cbe6",
+        "type": "random",
+        "z": "4197ca8541051dcf",
+        "name": "",
+        "low": 1,
+        "high": "30",
+        "inte": "true",
+        "property": "payload",
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "6a2f3ea6.e04a14",
+                "bc352b9d32f433b9",
+                "ddd8745f4d5f061b",
+                "b5b51ed14c5f1b48"
+            ]
+        ]
+    },
+    {
+        "id": "b0843c48c31e9a73",
+        "type": "inject",
+        "z": "4197ca8541051dcf",
+        "name": "Temperaturas",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "topico/temperatura",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "c306bdc147a5cbe6"
+            ]
+        ]
+    },
+    {
+        "id": "bc352b9d32f433b9",
+        "type": "ui_gauge",
+        "z": "4197ca8541051dcf",
+        "name": "",
+        "group": "048f2c1b55e013f7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatura",
+        "label": "graus",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "30",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 590,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ddd8745f4d5f061b",
+        "type": "ui_chart",
+        "z": "4197ca8541051dcf",
+        "name": "",
+        "group": "048f2c1b55e013f7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "0",
+        "ymax": "30",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 590,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6b3c2f73a840089b",
+        "type": "ui_toast",
+        "z": "4197ca8541051dcf",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "notificação",
+        "x": 870,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "7ac9602db4b738f3",
+        "type": "e-mail",
+        "z": "4197ca8541051dcf",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "anabsfonseca@gmail.com",
+        "dname": "e-mail",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f2ec2c6c5d3d7894",
+        "type": "file",
+        "z": "4197ca8541051dcf",
+        "name": "data",
+        "filename": "/nodered/data.txt",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 870,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b5b51ed14c5f1b48",
+        "type": "debug",
+        "z": "4197ca8541051dcf",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ab7c82369bf639c9",
+        "type": "debug",
+        "z": "4197ca8541051dcf",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c1db5e2d.c585c8",
+        "type": "mqtt-broker",
+        "name": "Servidor MQTT",
+        "broker": "172.18.0.1",
+        "port": "1884",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "048f2c1b55e013f7",
+        "type": "ui_group",
+        "name": "Refrigerador",
+        "tab": "93701c83a2316e5d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "93701c83a2316e5d",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

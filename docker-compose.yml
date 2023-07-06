@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - 1883:1883
+  node-red:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 1880:1880
+    depends_on:
+      - mosquitto

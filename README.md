@@ -1,18 +1,18 @@
 # Avaliação de integração com serviços em nuvem
 
-Grupo: Ana Beatriz Silva Fonseca
-       Gleicy Kelly Araujo Do Nascimento
-       Karllos Kerllen Freitas Gurgel
+### Grupo:
+- Ana Beatriz Silva Fonseca
+- Gleicy Kelly Araujo Do Nascimento
+- Karllos Kerllen Freitas Gurgel
 
+<br/>
 
-- video: [https://www.loom.com/share/9355848810bd482ebe606bb60d79d137](https://www.loom.com/share/9355848810bd482ebe606bb60d79d137?sid=f8461a75-9303-4fc0-908f-ce3b674f6842)
-- node-red ui: http://104.154.218.152/ui
+- **Video:** </br>
+[![Link para o vídeo](https://img.youtube.com/vi/seu_codigo_de_incorporacao/0.jpg)](https://www.loom.com/share/9355848810bd482ebe606bb60d79d137)
 
+- **Node-RED UI:** [http://104.154.218.152/ui](http://104.154.218.152/ui)
 
-comando utilizado para subir os containers foram o:
+Comando utilizado para subir os containers:
 
-
-~$ sudo docker compose up -d
-
-
-em seguida foi importado o arquivo flow.json para o ambiente do node-red que está rodando na porta 80 
+```bash
+$ sudo docker compose up -d
